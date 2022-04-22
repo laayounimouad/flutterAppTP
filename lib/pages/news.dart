@@ -1,8 +1,9 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:url_launcher/url_launcher.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 
 class News extends StatefulWidget {
   @override
@@ -16,6 +17,10 @@ class _News extends State {
   void initState() {
     // TODO: implement initState
     super.initState();
+    if (Platform.isWindows) {
+      WebView.platform = SurfaceAndroidWebView();
+    }
+
     WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
       getStats();
     });
@@ -55,7 +60,8 @@ class _News extends State {
               String title = news["articles"][index]["title"].toString();
               String url = news["articles"][index]["url"].toString();
               return GestureDetector(
-                onTap: () async => await launch(url),
+                //onTap: () async => await launch(url),
+                onTap: (() => WebView(initialUrl: url)),
                 child: Card(
                   child: Container(
                     height: 200,

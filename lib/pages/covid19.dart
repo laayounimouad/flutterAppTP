@@ -11,9 +11,9 @@ class Covid19 extends StatefulWidget {
 }
 
 class _Covid19 extends State<Covid19> {
-  var stats;
-  var data;
-  var general;
+  var stats = [];
+  var data = [];
+  var general = [];
   @override
   void initState() {
     super.initState();
@@ -34,8 +34,6 @@ class _Covid19 extends State<Covid19> {
           }
         });
       });
-      general = [];
-      stats = [];
       general.add(data[2]);
       stats.add(data[3]);
     }).catchError((onError) {
@@ -60,18 +58,20 @@ class _Covid19 extends State<Covid19> {
                       color: Colors.black,
                       child: Text("World Stats"),
                     ),
-                    subtitle: Column(
-                      children: [
-                        Text(
-                            "Total confirmed : ${general[0]["TotalConfirmed"].toString()}"),
-                        Text(
-                            "Total deaths : ${general[0]["TotalDeaths"].toString()}"),
-                      ],
-                    )),
+                    subtitle: general.isEmpty
+                        ? null
+                        : Column(
+                            children: [
+                              Text(
+                                  "Total confirmed : ${general[0]["TotalConfirmed"].toString()}"),
+                              Text(
+                                  "Total deaths : ${general[0]["TotalDeaths"].toString()}"),
+                            ],
+                          )),
               ),
               Expanded(
                   child: ListView.builder(
-                itemCount: stats == null ? 0 : stats[0].length,
+                itemCount: stats.isEmpty == true ? 0 : stats[0].length,
                 itemBuilder: (context, index) {
                   var country = stats[0][index]["Country"];
                   var totalConfirmed = stats[0][index]["TotalConfirmed"];
