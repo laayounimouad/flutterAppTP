@@ -30,17 +30,14 @@ class _Covid19 extends State<Covid19> {
         data = [];
         _json.values.forEach((element) {
           if (element != null) {
-            //print("$element \n\n");
             data.add(element);
           }
         });
-        //searchCountry(keyword);
       });
       general = [];
       stats = [];
       general.add(data[2]);
       stats.add(data[3]);
-//print(data);
     }).catchError((onError) {
       print("Error while calling the api ==> " + onError.toString());
     });
@@ -48,7 +45,6 @@ class _Covid19 extends State<Covid19> {
 
   @override
   Widget build(BuildContext context) {
-    //getStats();
     return Scaffold(
       appBar: AppBar(
         title: Text('covid 19 stats'),
